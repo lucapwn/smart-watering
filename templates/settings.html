@@ -1,0 +1,279 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Configurações - Smart Watering{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);" translate="no">Smart Watering</a></li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Sistema</a></li>
+                            <li class="breadcrumb-item active">Configurações</li>
+                        </ol>
+                    </div>
+                    <h4 class="page-title">Configurações</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title">Notificações</h4>
+                        <p class="text-muted font-14">
+                            Abaixo você poderá ativar ou desativar as notificações do sistema.
+                        </p>
+
+                        <div class="tab-content">
+                            <div class="tab-pane show active" id="switches-preview">
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        <form action="{% url 'settings' %}">
+                                            <div class="mb-1">
+                                                <input type="checkbox" class="form-control" id="notifications-status" data-switch="success" />
+                                                <label for="notifications-status" data-on-label="On" data-off-label="Off"></label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <form action="{% url 'temperature-measurement' %}" method="POST" class="needs-validation" id="temperature-measurement-form" novalidate="">
+                                        {% csrf_token %}
+
+                                        <h4 class="header-title">Medida de Temperatura</h4>
+                                        <p class="text-muted font-14">
+                                            Abaixo você poderá selecionar a medida de temperatura do sistema.
+                                        </p>
+
+                                        <div class="input-group mb-2">
+                                            <label class="input-group-text" for="temperature-measurement">Medida</label>
+                                            <select class="form-select" id="temperature-measurement" name="temperature-measurement" required="">
+                                                <option value="celsius" {% if setting.temperature_measurement == 'celsius' %}selected{% endif %}>Celsius (°C)</option>
+                                                <option value="kelvin" {% if setting.temperature_measurement == 'kelvin' %}selected{% endif %}>Kelvin (K)</option>
+                                                <option value="fahrenheit" {% if setting.temperature_measurement == 'fahrenheit' %}selected{% endif %}>Fahrenheit (°F)</option>
+                                            </select>
+                                            <div class="valid-feedback">
+                                                Perfeito!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Selecione um tipo de irrigação!
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <form action="{% url 'reservoir' %}" method="POST" id="reservoir-shape-form" class="needs-validation" novalidate="">
+                                        {% csrf_token %}
+
+                                        <h4 class="header-title">Reservatório</h4>
+                                        <p class="text-muted font-14">
+                                            Abaixo você deve informar a forma geométrica do reservatório de água.
+                                        </p>
+
+                                        <div class="input-group mb-3">
+                                            <label class="input-group-text" for="reservoir-shape">Forma Geométrica</label>
+                                            <select class="form-select" id="reservoir-shape" name="reservoir-shape" required="">
+                                                <option value="cube" {% if setting.reservoir_shape == 'cube' %}selected{% endif %}>Cubo</option>
+                                                <option value="cylinder" {% if setting.reservoir_shape == 'cylinder' %}selected{% endif %}>Cilindro</option>
+                                                <option value="parallelepiped" {% if setting.reservoir_shape == 'parallelepiped' %}selected{% endif %}>Paralelepípedo</option>
+                                                <option value="cone-trunk" {% if setting.reservoir_shape == 'cone-trunk' %}selected{% endif %}>Tronco de Cone</option>
+                                                <option value="pyramid-trunk" {% if setting.reservoir_shape == 'pyramid-trunk' %}selected{% endif %}>Tronco de Pirâmide</option>
+                                            </select>
+                                            <div class="valid-feedback">
+                                                Perfeito!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Selecione um tipo de irrigação!
+                                            </div>
+                                        </div>
+
+                                        <p class="header-title mt-3">Dimensões</p>
+                                        <p class="text-muted font-14">
+                                            Abaixo você deve informar as dimensões em metros do reservatório de água sem tampa.
+                                        </p>
+
+                                        <div id="reservoir-height-div">
+                                            <div class="mb-2">
+                                                <label for="reservoir-height" class="form-label">Altura <span class="badge badge-primary-lighten rounded-pill">(m)</span></label>
+                                                <input class="form-control" id="reservoir-height" type="number" name="reservoir-height" step="any" value="{{ setting.reservoir_height }}" placeholder="Informe a altura do reservatório." required="" />
+                                                <div class="valid-feedback">
+                                                    Perfeito!
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Informe um número válido!
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="reservoir-width-div">
+                                            <div class="mb-2">
+                                                <label for="reservoir-width" class="form-label">Largura <span class="badge badge-primary-lighten rounded-pill">(m)</span></label>
+                                                <input class="form-control" id="reservoir-width" type="number" name="reservoir-width" step="any" value="{{ setting.reservoir_width }}" placeholder="Informe a largura do reservatório." required="" />
+                                                <div class="valid-feedback">
+                                                    Perfeito!
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Informe um número válido!
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="reservoir-length-div">
+                                            <div class="mb-2">
+                                                <label for="reservoir-length" class="form-label">Comprimento <span class="badge badge-primary-lighten rounded-pill">(m)</span></label>
+                                                <input class="form-control" id="reservoir-length" type="number" name="reservoir-length" step="any" value="{{ setting.reservoir_length }}" placeholder="Informe o comprimento do reservatório." required="" />
+                                                <div class="valid-feedback">
+                                                    Perfeito!
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Informe um número válido!
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="reservoir-diameter-div">
+                                            <div class="mb-2">
+                                                <label for="reservoir-diameter" class="form-label">Diâmetro <span class="badge badge-primary-lighten rounded-pill">(m)</span></label>
+                                                <input
+                                                    class="form-control"
+                                                    id="reservoir-diameter"
+                                                    type="number"
+                                                    name="reservoir-diameter"
+                                                    step="any"
+                                                    value="{{ setting.reservoir_diameter }}"
+                                                    placeholder="Informe o diâmetro do reservatório."
+                                                    required=""
+                                                />
+                                                <div class="valid-feedback">
+                                                    Perfeito!
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Informe um número válido!
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="reservoir-larger-base-diameter-div">
+                                            <div class="mb-2">
+                                                <label for="reservoir-larger-base-diameter" class="form-label">Diâmetro da base maior <span class="badge badge-primary-lighten rounded-pill">(m)</span></label>
+                                                <input class="form-control" id="reservoir-larger-base-diameter" type="number" name="reservoir-larger-base-diameter" step="any" value="{{ setting.reservoir_larger_base_diameter }}" placeholder="Informe o diâmetro da base maior do reservatório." required="" />
+                                                <div class="valid-feedback">
+                                                    Perfeito!
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Informe um número válido!
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="reservoir-smaller-base-diameter-div">
+                                            <div class="mb-2">
+                                                <label for="reservoir-smaller-base-diameter" class="form-label">Diâmetro da base menor <span class="badge badge-primary-lighten rounded-pill">(m)</span></label>
+                                                <input
+                                                    class="form-control"
+                                                    id="reservoir-smaller-base-diameter"
+                                                    type="number"
+                                                    name="reservoir-smaller-base-diameter"
+                                                    step="any"
+                                                    value="{{ setting.reservoir_smaller_base_diameter }}"
+                                                    placeholder="Informe o diâmetro da base menor do reservatório."
+                                                    required=""
+                                                />
+                                                <div class="valid-feedback">
+                                                    Perfeito!
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Informe um número válido!
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="reservoir-larger-base-area-div">
+                                            <div class="mb-2">
+                                                <label for="reservoir-larger-base-area" class="form-label">Área da base maior <span class="badge badge-primary-lighten rounded-pill">(m)</span></label>
+                                                <input
+                                                    class="form-control"
+                                                    id="reservoir-larger-base-area"
+                                                    type="number"
+                                                    name="reservoir-larger-base-area"
+                                                    step="any"
+                                                    value="{{ setting.reservoir_larger_base_area }}"
+                                                    placeholder="Informe a área da base maior do reservatório."
+                                                    required=""
+                                                />
+                                                <div class="valid-feedback">
+                                                    Perfeito!
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Informe um número válido!
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="reservoir-smaller-base-area-div">
+                                            <div class="mb-2">
+                                                <label for="reservoir-smaller-base-area" class="form-label">Área da base menor <span class="badge badge-primary-lighten rounded-pill">(m)</span></label>
+                                                <input
+                                                    class="form-control"
+                                                    id="reservoir-smaller-base-area"
+                                                    type="number"
+                                                    name="reservoir-smaller-base-area"
+                                                    step="any"
+                                                    value="{{ setting.reservoir_smaller_base_area }}"
+                                                    placeholder="Informe a área da base menor do reservatório."
+                                                    required=""
+                                                />
+                                                <div class="valid-feedback">
+                                                    Perfeito!
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Informe um número válido!
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary mt-2" id="save-reservoir-form" style="min-width: 90px;">
+                                            <i class="uil-check me-1"></i>
+                                            Salvar
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/pages/demo.alerts.js' %}"></script>
+    <script src="{% static 'js/pages/demo.settings.js' %}"></script>
+{% endblock %}

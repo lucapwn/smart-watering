@@ -1,0 +1,1704 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}API - Smart Watering{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Smart Watering</a></li>
+                            <li class="breadcrumb-item active">API</li>
+                        </ol>
+                    </div>
+                    <h4 class="page-title">API</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title">Endpoints</h4>
+                        <p class="text-muted font-14">
+                            Abaixo você poderá visualizar os <em class="text-primary">endpoints</em> para acessar os recursos da API.
+                        </p>
+
+                        <div class="tab-content">
+                            <div class="tab-pane show active" id="switches-preview">
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        <div class="accordion custom-accordion" id="accordion">
+                                            <div class="card mb-1">
+                                                <div class="card-header" id="heading-one">
+                                                    <h5 class="m-0">
+                                                        <a class="custom-accordion-title d-block py-1" data-bs-toggle="collapse" href="#collapse-one" aria-expanded="true" aria-controls="collapse-one">
+                                                            Sensores
+                                                            <i class="mdi mdi-chevron-down accordion-arrow"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                
+                                                <div id="collapse-one" class="collapse show" aria-labelledby="heading-one" data-bs-parent="#accordion">
+                                                    <div class="card-body">
+                                                        <h5 class="mt-0 mb-2">
+                                                            <a href="{% url 'api-sensors' %}" target="_blank">/api/sensors</a>
+                                                        </h5>
+
+                                                        <p>
+                                                            Para obter e enviar dados dos sensores para a plataforma, você poderá utilizar este <em>endpoint</em> 
+                                                            e os métodos HTTP abaixo.
+                                                        </p>
+
+                                                        <ul class="nav nav-tabs nav-bordered mb-3">
+                                                            <li class="nav-item">
+                                                                <a href="#sensors-get" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                                                                    <span class="d-md-block">GET</span>
+                                                                </a>
+                                                            </li>
+
+                                                            <li class="nav-item">
+                                                                <a href="#sensors-post" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                                                    <span class="d-md-block">POST</span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                        
+                                                        <div class="tab-content">
+                                                            <div class="tab-pane show active" id="sensors-get">
+                                                                <p>
+                                                                    Ao realizar uma requisição com o método <strong>GET</strong>, você poderá obter a seguinte resposta:
+                                                                </p>
+
+                                                                <ul class="nav nav-tabs mb-3">
+                                                                    <li class="nav-item">
+                                                                        <a href="#sensors-200" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                                                                            <span class="d-md-block">
+                                                                                <span class="badge badge-success-lighten">200</span>
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                                
+                                                                <div class="tab-content">
+                                                                    <div class="tab-pane show active" id="sensors-200">
+                                                                        <p>Se houver registros no banco de dados:</p>
+<pre><code>[
+    {
+        "model": "core.sensor",
+        "pk": 1,
+        "fields": {
+            "rain_level": 40,
+            "soil_moisture": 68,
+            "humidity": 69.0,
+            "temperature": 25.8,
+            "dew_point": 19.68,
+            "heat_index": 27.0,
+            "air_quality": 1797.31,
+            "atmospheric_pressure": 92835.0,
+            "water_flow": 0.0,
+            "amount_water": 928.3,
+            "percentage_water": 92.83,
+            "luminosity": 23.81,
+            "ultraviolet_radiation": 1.08,
+            "created_at": "2023-01-22T00:58:42.701",
+            "updated_at": "2023-01-22T00:58:42.701"
+        }
+    }
+]</code></pre>
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Atributo</th>
+                                                                                        <th>Descrição</th>
+                                                                                        <th>Tipo</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>model</td>
+                                                                                        <td class="text-nowrap">Nome da classe no banco de dados.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>pk</td>
+                                                                                        <td class="text-nowrap">Identificador do registro.</td>
+                                                                                        <td>Inteiro</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>fields</td>
+                                                                                        <td class="text-nowrap">Campos da classe no banco de dados.</td>
+                                                                                        <td>Objeto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>rain_level</td>
+                                                                                        <td class="text-nowrap">Nível de chuva em porcentagem.</td>
+                                                                                        <td>Inteiro</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>soil_moisture</td>
+                                                                                        <td class="text-nowrap">Nível de umidade do solo em porcentagem.</td>
+                                                                                        <td>Inteiro</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>humidity</td>
+                                                                                        <td class="text-nowrap">Nível de umidade do ar em porcentagem.</td>
+                                                                                        <td>Decimal</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>temperature</td>
+                                                                                        <td class="text-nowrap">Temperatura do ambiente em graus Celsius.</td>
+                                                                                        <td>Decimal</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>dew_point</td>
+                                                                                        <td class="text-nowrap">Temperatura do ponto de orvalho em graus Celsius.</td>
+                                                                                        <td>Decimal</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>heat_index</td>
+                                                                                        <td class="text-nowrap">Índice de calor em graus Celsius.</td>
+                                                                                        <td>Decimal</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>air_quality</td>
+                                                                                        <td class="text-nowrap">Nível de qualidade do ar em partes por milhão.</td>
+                                                                                        <td>Decimal</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>atmospheric_pressure</td>
+                                                                                        <td class="text-nowrap">Nível de pressão atmosférica em Pascal.</td>
+                                                                                        <td>Decimal</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>water_flow</td>
+                                                                                        <td class="text-nowrap">Nível de vazão de água em litros.</td>
+                                                                                        <td>Decimal</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>amount_water</td>
+                                                                                        <td class="text-nowrap">Nível de água do reservatório em litros.</td>
+                                                                                        <td>Decimal</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>percentage_water</td>
+                                                                                        <td class="text-nowrap">Nível de água do reservatório em porcentagem.</td>
+                                                                                        <td>Decimal</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>luminosity</td>
+                                                                                        <td class="text-nowrap">Nível de luminosidade do ambiente em lux.</td>
+                                                                                        <td>Decimal</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>ultraviolet_radiation</td>
+                                                                                        <td class="text-nowrap">Nível de radiação ultravioleta em miliwatts por centímetro quadrado.</td>
+                                                                                        <td>Decimal</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>created_at</td>
+                                                                                        <td class="text-nowrap">Data e hora da criação do registro em ISO 8601.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>updated_at</td>
+                                                                                        <td class="text-nowrap">Data e hora da última edição do registro em ISO 8601.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="tab-pane" id="sensors-post">
+                                                                <p>
+                                                                    Para enviar os dados dos sensores para a plataforma, os <em>headers</em> da requisição 
+                                                                    devem conter os seguintes dados:
+                                                                </p>
+
+                                                                <div class="table-responsive mb-3">
+                                                                    <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Atributo</th>
+                                                                                <th>Conteúdo</th>
+                                                                                <th>Descrição</th>
+                                                                                <th>Tipo</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="text-nowrap">Content-Type</td>
+                                                                                <td class="text-nowrap">application/x-www-form-urlencoded</td>
+                                                                                <td class="text-nowrap">Definição do tipo de codificação dos dados.</td>
+                                                                                <td>Texto</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td class="text-nowrap">Authorization</td>
+                                                                                <td class="text-nowrap">{{ api_token }}</td>
+                                                                                <td class="text-nowrap"><em>Token</em> de autenticação da API.</td>
+                                                                                <td>Texto</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+
+                                                                <p>
+                                                                    Para enviar os dados dos sensores para a plataforma, o <em>payload</em> da requisição 
+                                                                    deve conter os seguintes dados:
+                                                                </p>
+
+                                                                <div class="table-responsive mb-3">
+                                                                    <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Atributo</th>
+                                                                                <th>Descrição</th>
+                                                                                <th>Tipo</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>rain_level</td>
+                                                                                <td class="text-nowrap">Nível de chuva em porcentagem.</td>
+                                                                                <td>Inteiro</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>soil_moisture</td>
+                                                                                <td class="text-nowrap">Nível de umidade do solo em porcentagem.</td>
+                                                                                <td>Inteiro</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>humidity</td>
+                                                                                <td class="text-nowrap">Nível de umidade do ar em porcentagem.</td>
+                                                                                <td>Decimal</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>temperature</td>
+                                                                                <td class="text-nowrap">Temperatura do ambiente em graus Celsius.</td>
+                                                                                <td>Decimal</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>dew_point</td>
+                                                                                <td class="text-nowrap">Temperatura do ponto de orvalho em graus Celsius.</td>
+                                                                                <td>Decimal</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>air_quality</td>
+                                                                                <td class="text-nowrap">Nível de qualidade do ar em partes por milhão.</td>
+                                                                                <td>Decimal</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>atmospheric_pressure</td>
+                                                                                <td class="text-nowrap">Nível de pressão atmosférica em Pascal.</td>
+                                                                                <td>Decimal</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>water_flow</td>
+                                                                                <td class="text-nowrap">Nível de vazão de água em litros.</td>
+                                                                                <td>Decimal</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>water_level</td>
+                                                                                <td class="text-nowrap">Nível de água do reservatório em centímetros.</td>
+                                                                                <td>Decimal</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>luminosity</td>
+                                                                                <td class="text-nowrap">Nível de luminosidade do ambiente em lux.</td>
+                                                                                <td>Decimal</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>ultraviolet_radiation</td>
+                                                                                <td class="text-nowrap">Nível de radiação ultravioleta em índice ultravioleta.</td>
+                                                                                <td>Decimal</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+
+                                                                <p>
+                                                                    Ao realizar uma requisição com o método <strong>POST</strong>, você poderá obter as seguintes respostas:
+                                                                </p>
+
+                                                                <ul class="nav nav-tabs mb-3">
+                                                                    <li class="nav-item">
+                                                                        <a href="#sensors-201" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                                                                            <span class="d-md-block">
+                                                                                <span class="badge badge-success-lighten">201</span>
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a href="#sensors-400" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                                                            <span class="d-md-block">
+                                                                                <span class="badge badge-warning-lighten">400</span>
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a href="#sensors-401" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                                                            <span class="d-md-block">
+                                                                                <span class="badge badge-warning-lighten">401</span>
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                                
+                                                                <div class="tab-content">
+                                                                    <div class="tab-pane show active" id="sensors-201">
+                                                                        <p>Se os dados foram enviados com sucesso:</p>
+<pre><code>{
+    "status": 201,
+    "message": "Data has been sent successfully."
+}</code></pre>
+                                                                    </div>
+
+                                                                    <div class="tab-pane" id="sensors-400">
+                                                                        <p>Se algum dado estiver com o formato inválido:</p>
+<pre><code>{
+    "status": 400,
+    "message": "Some sensor data is in an invalid format."
+}</code></pre>
+                                                                        <p>Se algum dado estiver incompleto:</p>
+<pre><code>{
+    "status": 400,
+    "message": "Sensor data is incomplete."
+}</code></pre>
+                                                                        <p>Se algum dado conter valores infinitos:</p>
+<pre><code>{
+    "status": 400,
+    "message": "Sensor data cannot have infinite values."
+}</code></pre>
+                                                                        <p>Se ocorreu algum erro ao salvar os dados:</p>
+<pre><code>{
+    "status": 400,
+    "message": "An error occurred while saving the data."
+}</code></pre>
+                                                                    </div>
+                                                                    <div class="tab-pane" id="sensors-401">
+                                                                        <p>Se o <em>token</em> da API não foi informado:</p>
+<pre><code>{
+    "status": 401,
+    "message": "Enter the API token."
+}</code></pre>
+                                                                        <p>Se o <em>token</em> da API for inválido:</p>
+<pre><code>{
+    "status": 401,
+    "message": "Please enter a valid API token."
+}</code></pre>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Atributo</th>
+                                                                                <th>Descrição</th>
+                                                                                <th>Tipo</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>status</td>
+                                                                                <td class="text-nowrap">Código de estado da requisição HTTP.</td>
+                                                                                <td>Inteiro</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>message</td>
+                                                                                <td class="text-nowrap">Mensagem de resposta da requisição HTTP.</td>
+                                                                                <td>Texto</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="card mb-1">
+                                                <div class="card-header" id="heading-two">
+                                                    <h5 class="m-0">
+                                                        <a class="custom-accordion-title collapsed d-block py-1" data-bs-toggle="collapse" href="#collapse-two" aria-expanded="false" aria-controls="collapse-two">
+                                                            Configurações 
+                                                            <i class="mdi mdi-chevron-down accordion-arrow"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                
+                                                <div id="collapse-two" class="collapse" aria-labelledby="heading-two" data-bs-parent="#accordion">
+                                                    <div class="card-body">
+                                                        <h5 class="mt-0 mb-2">
+                                                            <a href="{% url 'api-settings' %}" target="_blank">/api/settings</a>
+                                                        </h5>
+
+                                                        <p>
+                                                            Para obter os dados de configuração da plataforma, você poderá utilizar este <em>endpoint</em> 
+                                                            e o método HTTP abaixo.
+                                                        </p>
+
+                                                        <ul class="nav nav-tabs nav-bordered mb-3">
+                                                            <li class="nav-item">
+                                                                <a href="#settings-get" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                                                                    <span class="d-md-block">GET</span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                        
+                                                        <div class="tab-content">
+                                                            <div class="tab-pane show active" id="settings-get">
+                                                                <p>
+                                                                    Ao realizar uma requisição com o método <strong>GET</strong>, você poderá obter a seguinte resposta:
+                                                                </p>
+
+                                                                <ul class="nav nav-tabs mb-3">
+                                                                    <li class="nav-item">
+                                                                        <a href="#settings-200" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                                                                            <span class="d-md-block">
+                                                                                <span class="badge badge-success-lighten">200</span>
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                                
+                                                                <div class="tab-content">
+                                                                    <div class="tab-pane show active" id="settings-200">
+                                                                        <p>Se houver registros no banco de dados:</p>
+<pre><code>[
+    {
+        "model": "core.setting",
+        "pk": 1,
+        "fields": {
+            "temperature_measurement": "celsius",
+            "reservoir_shape": "parallelepiped",
+            "reservoir_capacity": 1000.0,
+            "reservoir_height": 1.0,
+            "reservoir_width": 1.0,
+            "reservoir_length": 1.0,
+            "reservoir_diameter": null,
+            "reservoir_larger_base_diameter": null,
+            "reservoir_smaller_base_diameter": null,
+            "reservoir_larger_base_area": null,
+            "reservoir_smaller_base_area": null,
+            "created_at": "2023-01-01T11:49:19.236",
+            "updated_at": "2023-01-01T12:00:40.784"
+        }
+    }
+]</code></pre>
+                                                                        <div class="table-responsive mb-3">
+                                                                            <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Atributo</th>
+                                                                                        <th>Descrição</th>
+                                                                                        <th>Tipo</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>model</td>
+                                                                                        <td class="text-nowrap">Nome da classe no banco de dados.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>pk</td>
+                                                                                        <td class="text-nowrap">Identificador do registro.</td>
+                                                                                        <td>Inteiro</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>fields</td>
+                                                                                        <td class="text-nowrap">Campos da classe no banco de dados.</td>
+                                                                                        <td>Objeto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>temperature_measurement</td>
+                                                                                        <td class="text-nowrap">Medida de temperatura.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>reservoir_shape</td>
+                                                                                        <td class="text-nowrap">Formato do reservatório de água.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>reservoir_capacity</td>
+                                                                                        <td class="text-nowrap">Capacidade do reservatório de água em litros.</td>
+                                                                                        <td>Decimal</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>reservoir_height</td>
+                                                                                        <td class="text-nowrap">Altura do reservatório de água em metros.</td>
+                                                                                        <td>Decimal</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>reservoir_width</td>
+                                                                                        <td class="text-nowrap">Largura do reservatório de água em metros.</td>
+                                                                                        <td>Decimal</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>reservoir_length</td>
+                                                                                        <td class="text-nowrap">Comprimento do reservatório de água em metros.</td>
+                                                                                        <td>Decimal</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>reservoir_diameter</td>
+                                                                                        <td class="text-nowrap">Diâmetro do reservatório de água em metros.</td>
+                                                                                        <td>Decimal</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>reservoir_larger_base_diameter</td>
+                                                                                        <td class="text-nowrap">Diâmetro da base maior do reservatório de água em metros.</td>
+                                                                                        <td>Decimal</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>reservoir_smaller_base_diameter</td>
+                                                                                        <td class="text-nowrap">Diâmetro da base menor do reservatório de água em metros.</td>
+                                                                                        <td>Decimal</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>reservoir_larger_base_area</td>
+                                                                                        <td class="text-nowrap">Área da base maior do reservatório de água em metros.</td>
+                                                                                        <td>Decimal</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>reservoir_smaller_base_area</td>
+                                                                                        <td class="text-nowrap">Área da base menor do reservatório de água em metros.</td>
+                                                                                        <td>Decimal</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>created_at</td>
+                                                                                        <td class="text-nowrap">Data e hora da criação do registro em ISO 8601.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>updated_at</td>
+                                                                                        <td class="text-nowrap">Data e hora da última edição do registro em ISO 8601.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+
+                                                                        <p>O atributo <strong>temperature_measurement</strong> pode possuir os seguintes valores:</p>
+
+                                                                        <div class="table-responsive mb-3">
+                                                                            <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Valor</th>
+                                                                                        <th>Descrição</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>kelvin</td>
+                                                                                        <td class="text-nowrap">Kelvin (K)</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>celsius</td>
+                                                                                        <td class="text-nowrap">Celsius (°C)</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>fahrenheit</td>
+                                                                                        <td class="text-nowrap">Fahrenheit (°F)</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+
+                                                                        <p>O atributo <strong>reservoir_shape</strong> pode possuir os seguintes valores:</p>
+
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Valor</th>
+                                                                                        <th>Descrição</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>cube</td>
+                                                                                        <td>Cubo</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>cylinder</td>
+                                                                                        <td>Cilindro</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>parallelepiped</td>
+                                                                                        <td>Paralelepípedo</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="text-nowrap">cone-trunk</td>
+                                                                                        <td class="text-nowrap">Tronco de Cone</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="text-nowrap">pyramid-trunk</td>
+                                                                                        <td class="text-nowrap">Tronco de Pirâmide</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="card mb-1">
+                                                <div class="card-header" id="heading-three">
+                                                    <h5 class="m-0">
+                                                        <a class="custom-accordion-title collapsed d-block py-1" data-bs-toggle="collapse" href="#collapse-three" aria-expanded="false" aria-controls="collapse-three">
+                                                            Testes de Irrigação  
+                                                            <i class="mdi mdi-chevron-down accordion-arrow"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                
+                                                <div id="collapse-three" class="collapse" aria-labelledby="heading-three" data-bs-parent="#accordion">
+                                                    <div class="card-body">
+                                                        <h5 class="mt-0 mb-2">
+                                                            <a href="{% url 'api-irrigation-tests' %}" target="_blank">/api/irrigation-tests</a>
+                                                        </h5>
+
+                                                        <p>
+                                                            Para obter os dados dos testes irrigação, você poderá utilizar este <em>endpoint</em> 
+                                                            e o método HTTP abaixo.
+                                                        </p>
+
+                                                        <ul class="nav nav-tabs nav-bordered mb-3">
+                                                            <li class="nav-item">
+                                                                <a href="#irrigation-tests-get" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                                                                    <span class="d-md-block">GET</span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                        
+                                                        <div class="tab-content">
+                                                            <div class="tab-pane show active" id="irrigation-tests-get">
+                                                                <p>
+                                                                    Ao realizar uma requisição com o método <strong>GET</strong>, você poderá obter a seguinte resposta:
+                                                                </p>
+
+                                                                <ul class="nav nav-tabs mb-3">
+                                                                    <li class="nav-item">
+                                                                        <a href="#irrigation-tests-200" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                                                                            <span class="d-md-block">
+                                                                                <span class="badge badge-success-lighten">200</span>
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                                
+                                                                <div class="tab-content">
+                                                                    <div class="tab-pane show active" id="irrigation-tests-200">
+                                                                        <p>Se houver registros no banco de dados:</p>
+<pre><code>[
+    {
+        "model": "core.irrigationtest",
+        "pk": 1,
+        "fields": {
+            "irrigation_time": 16,
+            "available": false,
+            "created_at": "2023-01-01T08:52:00.000",
+            "updated_at": "2023-01-01T09:08:08.000"
+        }
+    }
+]</code></pre>
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Atributo</th>
+                                                                                        <th>Descrição</th>
+                                                                                        <th>Tipo</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>model</td>
+                                                                                        <td class="text-nowrap">Nome da classe no banco de dados.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>pk</td>
+                                                                                        <td class="text-nowrap">Identificador do registro.</td>
+                                                                                        <td>Inteiro</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>fields</td>
+                                                                                        <td class="text-nowrap">Campos da classe no banco de dados.</td>
+                                                                                        <td>Objeto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>irrigation_time</td>
+                                                                                        <td class="text-nowrap">Tempo do teste de irrigação em segundos.</td>
+                                                                                        <td>Inteiro</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>available</td>
+                                                                                        <td class="text-nowrap">Disponibilidade do teste de irrigação.</td>
+                                                                                        <td>Booleano</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>created_at</td>
+                                                                                        <td class="text-nowrap">Data e hora da criação do registro em ISO 8601.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>updated_at</td>
+                                                                                        <td class="text-nowrap">Data e hora da última edição do registro em ISO 8601.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="card mb-1">
+                                                <div class="card-header" id="heading-four">
+                                                    <h5 class="m-0">
+                                                        <a class="custom-accordion-title collapsed d-block py-1" data-bs-toggle="collapse" href="#collapse-four" aria-expanded="false" aria-controls="collapse-four">
+                                                            Agendas de Irrigação  
+                                                            <i class="mdi mdi-chevron-down accordion-arrow"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                
+                                                <div id="collapse-four" class="collapse" aria-labelledby="heading-four" data-bs-parent="#accordion">
+                                                    <div class="card-body">
+                                                        <h5 class="mt-0 mb-2">
+                                                            <a href="{% url 'api-irrigation-schedules' %}" target="_blank">
+                                                                /api/irrigation-schedules/<span class="badge badge-secondary-lighten"><h5 class="mt-0 mb-0">id</h5></span>
+                                                            </a>
+                                                        </h5>
+
+                                                        <p>O parâmetro <span class="badge badge-secondary-lighten">id</span> é opcional e deve ser usado para obter uma agenda de irrigação específica.</p>
+
+                                                        <div class="table-responsive mb-3">
+                                                            <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Atributo</th>
+                                                                        <th>Descrição</th>
+                                                                        <th>Tipo</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>id</td>
+                                                                        <td class="text-nowrap">ID da agenda de irrigação.</td>
+                                                                        <td>Inteiro</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                        <p>
+                                                            Para obter os dados das agendas de irrigação, você poderá utilizar este <em>endpoint</em> 
+                                                            e o método HTTP abaixo.
+                                                        </p>
+
+                                                        <ul class="nav nav-tabs nav-bordered mb-3">
+                                                            <li class="nav-item">
+                                                                <a href="#irrigation-schedules-get" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                                                                    <span class="d-md-block">GET</span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                        
+                                                        <div class="tab-content">
+                                                            <div class="tab-pane show active" id="irrigation-schedules-get">
+                                                                <p>
+                                                                    Ao realizar uma requisição com o método <strong>GET</strong>, você poderá obter as seguintes respostas:
+                                                                </p>
+
+                                                                <ul class="nav nav-tabs mb-3">
+                                                                    <li class="nav-item">
+                                                                        <a href="#irrigation-schedules-200" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                                                                            <span class="d-md-block">
+                                                                                <span class="badge badge-success-lighten">200</span>
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a href="#irrigation-schedules-404" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                                                            <span class="d-md-block">
+                                                                                <span class="badge badge-warning-lighten">404</span>
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                                
+                                                                <div class="tab-content">
+                                                                    <div class="tab-pane show active" id="irrigation-schedules-200">
+                                                                        <p>Se houver registros no banco de dados:</p>
+<pre><code>[
+    {
+        "model": "core.scheduleirrigation",
+        "pk": 1,
+        "fields": {
+            "irrigation_type": "time",
+            "irrigation_period": "unique",
+            "status": "irrigated",
+            "datetime_on": null,
+            "datetime_off": null,
+            "time_on": "06:07:00",
+            "time_off": "06:07:20",
+            "humidity_on": null,
+            "humidity_off": null,
+            "night_irrigation": null,
+            "water_flow": null,
+            "created_at": "2023-01-11T06:06:43.502",
+            "updated_at": "2023-01-11T06:07:24.265"
+        }
+    }
+]</code></pre>
+                                                                        <div class="table-responsive mb-3">
+                                                                            <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Atributo</th>
+                                                                                        <th>Descrição</th>
+                                                                                        <th>Tipo</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>model</td>
+                                                                                        <td class="text-nowrap">Nome da classe no banco de dados.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>pk</td>
+                                                                                        <td class="text-nowrap">Identificador do registro.</td>
+                                                                                        <td>Inteiro</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>fields</td>
+                                                                                        <td class="text-nowrap">Campos da classe no banco de dados.</td>
+                                                                                        <td>Objeto</td>
+                                                                                    </tr>
+
+                                                                                    <tr>
+                                                                                        <td>irrigation_type</td>
+                                                                                        <td class="text-nowrap">Tipo de irrigação.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>irrigation_period</td>
+                                                                                        <td class="text-nowrap">Período de irrigação.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>status</td>
+                                                                                        <td class="text-nowrap">Estado da agenda de irrigação.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>datetime_on</td>
+                                                                                        <td class="text-nowrap">Data e hora que o sistema de irrigação deve ser ligado em ISO 8601.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>datetime_off</td>
+                                                                                        <td class="text-nowrap">Data e hora que o sistema de irrigação deve ser desligado em ISO 8601.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>time_on</td>
+                                                                                        <td class="text-nowrap">Hora que o sistema de irrigação deve ser ligado em ISO 8601.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>time_off</td>
+                                                                                        <td class="text-nowrap">Hora que o sistema de irrigação deve ser desligado em ISO 8601.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>humidity_on</td>
+                                                                                        <td class="text-nowrap">Umidade do solo que o sistema de irrigação deve ser ligado em porcentagem.</td>
+                                                                                        <td>Inteiro</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>humidity_off</td>
+                                                                                        <td class="text-nowrap">Umidade do solo que o sistema de irrigação deve ser desligado em porcentagem.</td>
+                                                                                        <td>Inteiro</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>night_irrigation</td>
+                                                                                        <td class="text-nowrap">Indica se o sistema de irrigação deve ser ligado a noite.</td>
+                                                                                        <td>Booleano</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>water_flow</td>
+                                                                                        <td class="text-nowrap">Vazão de água que o sistema de irrigação deve irrigar em litros.</td>
+                                                                                        <td>Decimal</td>
+                                                                                    </tr>
+
+                                                                                    <tr>
+                                                                                        <td>created_at</td>
+                                                                                        <td class="text-nowrap">Data e hora da criação do registro em ISO 8601.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>updated_at</td>
+                                                                                        <td class="text-nowrap">Data e hora da última edição do registro em ISO 8601.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+
+                                                                        <p>O atributo <strong>irrigation_type</strong> pode possuir os seguintes valores:</p>
+
+                                                                        <div class="table-responsive mb-3">
+                                                                            <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Valor</th>
+                                                                                        <th>Descrição</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>day</td>
+                                                                                        <td class="text-nowrap">Por dia</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>time</td>
+                                                                                        <td class="text-nowrap">Por horário</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>humidity</td>
+                                                                                        <td class="text-nowrap">Por umidade</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>flow</td>
+                                                                                        <td class="text-nowrap">Por vazão</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+
+                                                                        <p>O atributo <strong>irrigation_period</strong> pode possuir os seguintes valores:</p>
+
+                                                                        <div class="table-responsive mb-3">
+                                                                            <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Valor</th>
+                                                                                        <th>Descrição</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>unique</td>
+                                                                                        <td class="text-nowrap">Único</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>daily</td>
+                                                                                        <td class="text-nowrap">Diário</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+
+                                                                        <p>O atributo <strong>status</strong> pode possuir os seguintes valores:</p>
+
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Valor</th>
+                                                                                        <th>Descrição</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>irrigated</td>
+                                                                                        <td>Irrigado</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>irrigating</td>
+                                                                                        <td>Irrigando</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>scheduled</td>
+                                                                                        <td>Agendado</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="tab-pane" id="irrigation-schedules-404">
+                                                                        <p>Se a agenda de irrigação não existir:</p>
+<pre><code>{
+    "status": 404,
+    "message": "This irrigation schedule does not exist."
+}</code></pre>
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Atributo</th>
+                                                                                        <th>Descrição</th>
+                                                                                        <th>Tipo</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>status</td>
+                                                                                        <td class="text-nowrap">Código de estado da requisição HTTP.</td>
+                                                                                        <td>Inteiro</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>message</td>
+                                                                                        <td class="text-nowrap">Mensagem de resposta da requisição HTTP.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="card mb-1">
+                                                <div class="card-header" id="heading-five">
+                                                    <h5 class="m-0">
+                                                        <a class="custom-accordion-title collapsed d-block py-1" data-bs-toggle="collapse" href="#collapse-five" aria-expanded="false" aria-controls="collapse-five">
+                                                            Consumo de Água  
+                                                            <i class="mdi mdi-chevron-down accordion-arrow"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                
+                                                <div id="collapse-five" class="collapse" aria-labelledby="heading-five" data-bs-parent="#accordion">
+                                                    <div class="card-body">
+                                                        <h5 class="mt-0 mb-2">
+                                                            <a href="{% url 'api-water-consumption' %}" target="_blank">/api/water-consumption</a>
+                                                        </h5>
+
+                                                        <p>
+                                                            Para obter e enviar dados do consumo de água para a plataforma, você poderá utilizar este <em>endpoint</em> 
+                                                            e os métodos HTTP abaixo.
+                                                        </p>
+
+                                                        <ul class="nav nav-tabs nav-bordered mb-3">
+                                                            <li class="nav-item">
+                                                                <a href="#water-consumption-get" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                                                                    <span class="d-md-block">GET</span>
+                                                                </a>
+                                                            </li>
+
+                                                            <li class="nav-item">
+                                                                <a href="#water-consumption-post" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                                                    <span class="d-md-block">POST</span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                        
+                                                        <div class="tab-content">
+                                                            <div class="tab-pane show active" id="water-consumption-get">
+                                                                <p>
+                                                                    Ao realizar uma requisição com o método <strong>GET</strong>, você poderá obter a seguinte resposta:
+                                                                </p>
+
+                                                                <ul class="nav nav-tabs mb-3">
+                                                                    <li class="nav-item">
+                                                                        <a href="#water-consumption-200" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                                                                            <span class="d-md-block">
+                                                                                <span class="badge badge-success-lighten">200</span>
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                                
+                                                                <div class="tab-content">
+                                                                    <div class="tab-pane show active" id="water-consumption-200">
+                                                                        <p>Se houver registros no banco de dados:</p>
+<pre><code>[
+    {
+        "model": "core.waterconsumption",
+        "pk": 1,
+        "fields": {
+            "consumption": 5.00,
+            "created_at": "2023-01-01T06:04:56.279",
+            "updated_at": "2023-01-01T06:04:56.279"
+        }
+    }
+]</code></pre>
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Atributo</th>
+                                                                                        <th>Descrição</th>
+                                                                                        <th>Tipo</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>model</td>
+                                                                                        <td class="text-nowrap">Nome da classe no banco de dados.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>pk</td>
+                                                                                        <td class="text-nowrap">Identificador do registro.</td>
+                                                                                        <td>Inteiro</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>fields</td>
+                                                                                        <td class="text-nowrap">Campos da classe no banco de dados.</td>
+                                                                                        <td>Objeto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>consumption</td>
+                                                                                        <td class="text-nowrap">Consumo de água em litros.</td>
+                                                                                        <td>Decimal</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>created_at</td>
+                                                                                        <td class="text-nowrap">Data e hora da criação do registro em ISO 8601.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>updated_at</td>
+                                                                                        <td class="text-nowrap">Data e hora da última edição do registro em ISO 8601.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="tab-pane" id="water-consumption-post">
+                                                                <p>
+                                                                    Para enviar os dados do consumo de água para a plataforma, os <em>headers</em> da requisição 
+                                                                    devem conter os seguintes dados:
+                                                                </p>
+
+                                                                <div class="table-responsive mb-3">
+                                                                    <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Atributo</th>
+                                                                                <th>Conteúdo</th>
+                                                                                <th>Descrição</th>
+                                                                                <th>Tipo</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="text-nowrap">Content-Type</td>
+                                                                                <td class="text-nowrap">application/x-www-form-urlencoded</td>
+                                                                                <td class="text-nowrap">Definição do tipo de codificação dos dados.</td>
+                                                                                <td>Texto</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td class="text-nowrap">Authorization</td>
+                                                                                <td class="text-nowrap">{{ api_token }}</td>
+                                                                                <td class="text-nowrap"><em>Token</em> de autenticação da API.</td>
+                                                                                <td>Texto</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+
+                                                                <p>
+                                                                    Para enviar os dados do consumo de água para a plataforma, o <em>payload</em> da requisição 
+                                                                    deve conter os seguintes dados:
+                                                                </p>
+
+                                                                <div class="table-responsive mb-3">
+                                                                    <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Atributo</th>
+                                                                                <th>Descrição</th>
+                                                                                <th>Tipo</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>consumption</td>
+                                                                                <td class="text-nowrap">Consumo de água em litros.</td>
+                                                                                <td>Decimal</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+
+                                                                <p>
+                                                                    Ao realizar uma requisição com o método <strong>POST</strong>, você poderá obter as seguintes respostas:
+                                                                </p>
+
+                                                                <ul class="nav nav-tabs mb-3">
+                                                                    <li class="nav-item">
+                                                                        <a href="#water-consumption-201" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                                                                            <span class="d-md-block">
+                                                                                <span class="badge badge-success-lighten">201</span>
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a href="#water-consumption-400" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                                                            <span class="d-md-block">
+                                                                                <span class="badge badge-warning-lighten">400</span>
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a href="#water-consumption-401" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                                                            <span class="d-md-block">
+                                                                                <span class="badge badge-warning-lighten">401</span>
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                                
+                                                                <div class="tab-content">
+                                                                    <div class="tab-pane show active" id="water-consumption-201">
+                                                                        <p>Se os dados foram enviados com sucesso:</p>
+<pre><code>{
+    "status": 201,
+    "message": "Data has been sent successfully."
+}</code></pre>
+                                                                    </div>
+
+                                                                    <div class="tab-pane" id="water-consumption-400">
+                                                                        <p>Se algum dado estiver com o formato inválido:</p>
+<pre><code>{
+    "status": 400,
+    "message": "Enter valid water consumption."
+}</code></pre>
+                                                                        <p>Se ocorreu algum erro ao salvar os dados:</p>
+<pre><code>{
+    "status": 400,
+    "message": "An error occurred while saving the data."
+}</code></pre>
+                                                                    </div>
+                                                                    <div class="tab-pane" id="water-consumption-401">
+                                                                        <p>Se o <em>token</em> da API não foi informado:</p>
+<pre><code>{
+    "status": 401,
+    "message": "Enter the API token."
+}</code></pre>
+                                                                        <p>Se o <em>token</em> da API for inválido:</p>
+<pre><code>{
+    "status": 401,
+    "message": "Please enter a valid API token."
+}</code></pre>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Atributo</th>
+                                                                                <th>Descrição</th>
+                                                                                <th>Tipo</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>status</td>
+                                                                                <td class="text-nowrap">Código de estado da requisição HTTP.</td>
+                                                                                <td>Inteiro</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>message</td>
+                                                                                <td class="text-nowrap">Mensagem de resposta da requisição HTTP.</td>
+                                                                                <td>Texto</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="card mb-1">
+                                                <div class="card-header" id="heading-six">
+                                                    <h5 class="m-0">
+                                                        <a class="custom-accordion-title collapsed d-block py-1" data-bs-toggle="collapse" href="#collapse-six" aria-expanded="false" aria-controls="collapse-six">
+                                                            Notificações 
+                                                            <i class="mdi mdi-chevron-down accordion-arrow"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                
+                                                <div id="collapse-six" class="collapse" aria-labelledby="heading-six" data-bs-parent="#accordion">
+                                                    <div class="card-body">
+                                                        <h5 class="mt-0 mb-2">
+                                                            <a href="{% url 'api-notifications' %}" target="_blank">
+                                                                /api/notifications/<span class="badge badge-secondary-lighten"><h5 class="mt-0 mb-0">id</h5></span>
+                                                            </a>
+                                                        </h5>
+
+                                                        <p>O parâmetro <span class="badge badge-secondary-lighten">id</span> é opcional e deve ser usado para obter uma notificação específica.</p>
+
+                                                        <div class="table-responsive mb-3">
+                                                            <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Atributo</th>
+                                                                        <th>Descrição</th>
+                                                                        <th>Tipo</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>id</td>
+                                                                        <td class="text-nowrap">ID da notificação.</td>
+                                                                        <td>Inteiro</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                        <p>
+                                                            Para obter e enviar dados das notificações para a plataforma, você poderá utilizar este <em>endpoint</em> 
+                                                            e os métodos HTTP abaixo.
+                                                        </p>
+
+                                                        <ul class="nav nav-tabs nav-bordered mb-3">
+                                                            <li class="nav-item">
+                                                                <a href="#notifications-get" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                                                                    <span class="d-md-block">GET</span>
+                                                                </a>
+                                                            </li>
+
+                                                            <li class="nav-item">
+                                                                <a href="#notifications-post" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                                                    <span class="d-md-block">POST</span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                        
+                                                        <div class="tab-content">
+                                                            <div class="tab-pane show active" id="notifications-get">
+                                                                <p>
+                                                                    Ao realizar uma requisição com o método <strong>GET</strong>, você poderá obter as seguintes respostas:
+                                                                </p>
+
+                                                                <ul class="nav nav-tabs mb-3">
+                                                                    <li class="nav-item">
+                                                                        <a href="#notifications-200" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                                                                            <span class="d-md-block">
+                                                                                <span class="badge badge-success-lighten">200</span>
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a href="#notifications-404" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                                                            <span class="d-md-block">
+                                                                                <span class="badge badge-warning-lighten">404</span>
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                                
+                                                                <div class="tab-content">
+                                                                    <div class="tab-pane show active" id="notifications-200">
+                                                                        <p>Se houver registros no banco de dados:</p>
+<pre><code>[
+    {
+        "model": "core.notification",
+        "pk": 1,
+        "fields": {
+            "title": "Irrigation System",
+            "message": "The irrigation system was turned on at 17:30:00 and will be turned off at 18:00:00.",
+            "created_at": "2023-01-01T17:30:00.000",
+            "updated_at": "2023-01-01T17:30:00.000"
+        }
+    }
+]</code></pre>
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Atributo</th>
+                                                                                        <th>Descrição</th>
+                                                                                        <th>Tipo</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>model</td>
+                                                                                        <td class="text-nowrap">Nome da classe no banco de dados.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>pk</td>
+                                                                                        <td class="text-nowrap">Identificador do registro.</td>
+                                                                                        <td>Inteiro</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>fields</td>
+                                                                                        <td class="text-nowrap">Campos da classe no banco de dados.</td>
+                                                                                        <td>Objeto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>title</td>
+                                                                                        <td class="text-nowrap">Título da notificação.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>message</td>
+                                                                                        <td class="text-nowrap">Mensagem da notificação.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>created_at</td>
+                                                                                        <td class="text-nowrap">Data e hora da criação do registro em ISO 8601.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>updated_at</td>
+                                                                                        <td class="text-nowrap">Data e hora da última edição do registro em ISO 8601.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="tab-pane" id="notifications-404">
+                                                                        <p>Se a notificação não existir:</p>
+<pre><code>{
+    "status": 404,
+    "message": "This notification does not exist."
+}</code></pre>
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Atributo</th>
+                                                                                        <th>Descrição</th>
+                                                                                        <th>Tipo</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>status</td>
+                                                                                        <td class="text-nowrap">Código de estado da requisição HTTP.</td>
+                                                                                        <td>Inteiro</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>message</td>
+                                                                                        <td class="text-nowrap">Mensagem de resposta da requisição HTTP.</td>
+                                                                                        <td>Texto</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="tab-pane" id="notifications-post">
+                                                                <p>
+                                                                    Para enviar os dados das notificações para a plataforma, os <em>headers</em> da requisição 
+                                                                    devem conter os seguintes dados:
+                                                                </p>
+
+                                                                <div class="table-responsive mb-3">
+                                                                    <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Atributo</th>
+                                                                                <th>Conteúdo</th>
+                                                                                <th>Descrição</th>
+                                                                                <th>Tipo</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="text-nowrap">Content-Type</td>
+                                                                                <td class="text-nowrap">application/x-www-form-urlencoded</td>
+                                                                                <td class="text-nowrap">Definição do tipo de codificação dos dados.</td>
+                                                                                <td>Texto</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td class="text-nowrap">Authorization</td>
+                                                                                <td class="text-nowrap">{{ api_token }}</td>
+                                                                                <td class="text-nowrap"><em>Token</em> de autenticação da API.</td>
+                                                                                <td>Texto</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+
+                                                                <p>
+                                                                    Para enviar os dados das notificações para a plataforma, o <em>payload</em> da requisição 
+                                                                    deve conter os seguintes dados:
+                                                                </p>
+
+                                                                <div class="table-responsive mb-3">
+                                                                    <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Atributo</th>
+                                                                                <th>Descrição</th>
+                                                                                <th>Tipo</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>title</td>
+                                                                                <td class="text-nowrap">Título da notificação.</td>
+                                                                                <td>Texto</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>message</td>
+                                                                                <td class="text-nowrap">Mensagem da notificação.</td>
+                                                                                <td>Texto</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+
+                                                                <p>
+                                                                    Ao realizar uma requisição com o método <strong>POST</strong>, você poderá obter as seguintes respostas:
+                                                                </p>
+
+                                                                <ul class="nav nav-tabs mb-3">
+                                                                    <li class="nav-item">
+                                                                        <a href="#notifications-201" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                                                                            <span class="d-md-block">
+                                                                                <span class="badge badge-success-lighten">201</span>
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a href="#notifications-400" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                                                            <span class="d-md-block">
+                                                                                <span class="badge badge-warning-lighten">400</span>
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a href="#notifications-401" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                                                            <span class="d-md-block">
+                                                                                <span class="badge badge-warning-lighten">401</span>
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                                
+                                                                <div class="tab-content">
+                                                                    <div class="tab-pane show active" id="notifications-201">
+                                                                        <p>Se os dados foram enviados com sucesso:</p>
+<pre><code>{
+    "status": 201,
+    "message": "Data has been sent successfully."
+}</code></pre>
+                                                                    </div>
+
+                                                                    <div class="tab-pane" id="notifications-400">
+                                                                        <p>Se o título estiver com o formato inválido:</p>
+<pre><code>{
+    "status": 400,
+    "message": "The title field cannot be empty and must contain a maximum of 30 characters."
+}</code></pre>
+                                                                        <p>Se a mensagem estiver com o formato inválido:</p>
+<pre><code>{
+    "status": 400,
+    "message": "The message field cannot be empty and must contain a maximum of 255 characters."
+}</code></pre>
+                                                                        <p>Se ocorreu algum erro ao salvar os dados:</p>
+<pre><code>{
+    "status": 400,
+    "message": "An error occurred while saving the data."
+}</code></pre>
+                                                                    </div>
+                                                                    <div class="tab-pane" id="notifications-401">
+                                                                        <p>Se o <em>token</em> da API não foi informado:</p>
+<pre><code>{
+    "status": 401,
+    "message": "Enter the API token."
+}</code></pre>
+                                                                        <p>Se o <em>token</em> da API for inválido:</p>
+<pre><code>{
+    "status": 401,
+    "message": "Please enter a valid API token."
+}</code></pre>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-sm table-responsive-xl table-centered table-hover mb-0">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Atributo</th>
+                                                                                <th>Descrição</th>
+                                                                                <th>Tipo</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>status</td>
+                                                                                <td class="text-nowrap">Código de estado da requisição HTTP.</td>
+                                                                                <td>Inteiro</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>message</td>
+                                                                                <td class="text-nowrap">Mensagem de resposta da requisição HTTP.</td>
+                                                                                <td>Texto</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}{% endblock %}

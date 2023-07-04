@@ -1,0 +1,36 @@
+{% extends "auth_base.html" %}
+
+{% load static %}
+
+{% block title %}Confirmar E-mail - Smart Watering{% endblock %}
+
+{% block content %}
+    <div class="text-center m-auto">
+        <img src="{% static 'images/core/mail_sent.svg' %}" alt="" height="64" />
+        <h4 class="text-dark-50 text-center mt-4 fw-bold">Por favor, verifique seu e-mail.</h4>
+        <p class="text-muted mb-4">
+            As instruções para redefinir sua senha foram enviadas para <b>{{ email }}</b>.
+        </p>
+    </div>
+
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+        <div class="mb-0 d-grid text-center">
+            <button type="submit" class="btn btn-primary">
+                <i class="mdi mdi-home me-1"></i>
+                Voltar para o login
+            </button>
+        </div>
+    </form>
+
+    <footer class="footer footer-alt">
+        <p class="text-muted" translate="no">
+            <script>
+                document.write(new Date().getFullYear());
+            </script>
+            © Smart Watering
+        </p>
+    </footer>
+{% endblock %}
+
+{% block js %}{% endblock %}

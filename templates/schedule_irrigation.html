@@ -1,0 +1,457 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Agendar Irrigação - Smart Watering{% endblock %}
+
+{% block css %}
+    <link href="{% static 'css/vendor/dataTables.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);" translate="no">Smart Watering</a></li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Sistema</a></li>
+                            <li class="breadcrumb-item active">Agendar Irrigação</li>
+                        </ol>
+                    </div>
+                    <h4 class="page-title">Agendar Irrigação</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title">Teste de Irrigação</h4>
+                        <p class="text-muted font-14">
+                            Abaixo você poderá testar o sistema de irrigação durante alguns segundos.
+                        </p>
+
+                        <div class="tab-content">
+                            <div class="tab-pane show active" id="switches-preview">
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        {% if messages %}
+                                            {% for message in messages %}
+                                                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                                                    <div class="alert alert-danger alert-dismissible border-0 fade show mb-3" role="alert">
+                                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                        {{ message }}
+                                                    </div>
+                                                {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+                                                    <div class="alert alert-warning alert-dismissible border-0 fade show mb-3" role="alert">
+                                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                        {{ message }}
+                                                    </div>
+                                                {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                                                    <div class="alert alert-success alert-dismissible border-0 fade show mb-3" role="alert">
+                                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                        {{ message }}
+                                                    </div>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+
+                                        <div id="progress-bar-div" class="mb-3">
+                                            <div class="progress">
+                                                <div
+                                                    id="progress-bar"
+                                                    class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                                                    role="progressbar"
+                                                    style="width: 0%;"
+                                                    aria-valuenow="10"
+                                                    aria-valuemin="0"
+                                                    aria-valuemax="100"
+                                                >
+                                                    25%
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <form action="{% url 'irrigation-test' %}" method="POST" id="irrigation-test">
+                                            {% csrf_token %}
+
+                                            <div class="mb-3">
+                                                <label for="irrigation-time" class="form-label">Tempo</label>
+                                                <input type="text" id="irrigation-time" name="irrigation-time" data-plugin="range-slider" data-postfix="s" data-min="10" data-max="60" data-from="16" />
+                                            </div>
+
+                                            <div id="standard-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title" id="standard-modalLabel">Confirmação</h4>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <h5>Atenção!</h5>
+                                                            <p>O sistema de irrigação será ligado por <strong id="seconds-text"></strong>. Você tem certeza que deseja irrigar?</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                                                            <button type="button" class="btn btn-primary" id="confirm-irrigation" data-bs-dismiss="modal">Confirmar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <button id="start-irrigation-test" type="button" class="btn btn-primary" style="min-width: 90px;">
+                                            <i class="uil-check me-1"></i>
+                                            Iniciar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title">Agendar</h4>
+                        <p class="text-muted font-14">
+                            Abaixo você poderá 
+                            {% if not scheduled_irrigations %}
+                                adicionar
+                            {% else %}
+                                gerenciar as
+                            {% endif %}
+                            agendas de irrigação.
+                        </p>
+
+                        <div class="row mb-1">
+                            <div class="col-sm-4">
+                                <button class="btn btn-success mb-2" id="add-schedule"><i class="uil-plus me-2"></i>Adicionar</button>
+                            </div>
+                        </div>
+
+                        <div id="schedule-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="schedule-modal-label" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="schedule-modal-label">Agendar Irrigação</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="text-muted font-14">
+                                            Abaixo você poderá definir qual o tipo de irrigação.
+                                        </p>
+
+                                        <div class="tab-content">
+                                            <div class="tab-pane show active" id="switches-preview">
+                                                <div class="row">
+                                                    <div class="col-xl-12">
+                                                        <form id="schedule-irrigation" action="{% url 'schedule-irrigation' %}" method="POST" class="needs-validation" novalidate="">
+                                                            {% csrf_token %}
+
+                                                            <div class="input-group mb-2">
+                                                                <label class="input-group-text" for="irrigation-type">Tipo</label>
+                                                                <select class="form-select" id="irrigation-type" name="irrigation-type" required="">
+                                                                    <option value="day" selected>Por dia</option>
+                                                                    <option value="time">Por horário</option>
+                                                                    <option value="humidity">Por umidade</option>
+                                                                    <option value="flow">Por vazão</option>
+                                                                </select>
+                                                                <div class="valid-feedback">
+                                                                    Perfeito!
+                                                                </div>
+                                                                <div class="invalid-feedback">
+                                                                    Selecione um tipo de irrigação!
+                                                                </div>
+                                                            </div>
+
+                                                            <div id="period-container">
+                                                                <p class="text-muted font-14">
+                                                                    Abaixo você poderá definir qual o 
+                                                                    <a class="text-primary p-0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="O período refere-se à frequência em que o sistema de irrigação permanecerá ligado. Se for único, o sistema será ligado apenas uma vez. Se for diário, o sistema será ligado diariamente.">
+                                                                        período
+                                                                    </a>
+                                                                    de irrigação.
+                                                                </p>
+
+                                                                <div class="input-group">
+                                                                    <label class="input-group-text" for="irrigation-period">Período</label>
+                                                                    <select class="form-select" id="irrigation-period" name="irrigation-period" required="">
+                                                                        <option value="unique" selected>Único</option>
+                                                                        <option value="daily">Diário</option>
+                                                                    </select>
+                                                                    <div class="valid-feedback">
+                                                                        Perfeito!
+                                                                    </div>
+                                                                    <div class="invalid-feedback">
+                                                                        Selecione um período de irrigação!
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div id="per-day">
+                                                                <p class="header-title mt-3">Por dia</p>
+                                                                <p class="text-muted font-14">
+                                                                    Abaixo você poderá definir qual o dia e o horário que o sistema de irrigação deverá ser ligado e desligado.
+                                                                </p>
+                                                                <div class="mb-2">
+                                                                    <label for="datetime-on" class="form-label">Ligar</label>
+                                                                    <div class="input-group">
+                                                                        <input id="datetime-on" type="datetime-local" name="datetime-on" step="1" class="form-control" required="" />
+                                                                        <div class="valid-feedback">
+                                                                            Perfeito!
+                                                                        </div>
+                                                                        <div class="invalid-feedback">
+                                                                            Informe uma data válida!
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2">
+                                                                    <label for="datetime-off" class="form-label">Desligar</label>
+                                                                    <div class="input-group">
+                                                                        <input id="datetime-off" type="datetime-local" name="datetime-off" step="1" class="form-control" required="" />
+                                                                        <div class="valid-feedback">
+                                                                            Perfeito!
+                                                                        </div>
+                                                                        <div class="invalid-feedback">
+                                                                            Informe uma data válida!
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div id="per-time">
+                                                                <p class="header-title mt-3">Por horário</p>
+                                                                <p class="text-muted font-14">
+                                                                    Abaixo você poderá definir qual horário o sistema de irrigação deverá ser ligado e desligado.
+                                                                </p>
+                                                                <div class="mb-2">
+                                                                    <label for="time-on" class="form-label">Ligar</label>
+                                                                    <div class="input-group">
+                                                                        <input id="time-on" type="text" name="time-on" class="form-control time" required="" />
+                                                                        <span class="input-group-text"><i class="dripicons-clock"></i></span>
+                                                                        <div class="valid-feedback">
+                                                                            Perfeito!
+                                                                        </div>
+                                                                        <div class="invalid-feedback">
+                                                                            Informe um horário válido!
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2">
+                                                                    <label for="time-off" class="form-label">Desligar</label>
+                                                                    <div class="input-group">
+                                                                        <input id="time-off" type="text" name="time-off" class="form-control time" required="" />
+                                                                        <span class="input-group-text"><i class="dripicons-clock"></i></span>
+                                                                        <div class="valid-feedback">
+                                                                            Perfeito!
+                                                                        </div>
+                                                                        <div class="invalid-feedback">
+                                                                            Informe um horário válido!
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div id="per-humidity">
+                                                                <p class="header-title mt-3">Por umidade</p>
+                                                                <p class="text-muted font-14">
+                                                                    Abaixo você poderá definir o intervalo de
+                                                                    <a class="text-primary p-0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="A umidade do solo refere-se a porcentagem de água presente no solo.">
+                                                                        umidade
+                                                                    </a>
+                                                                    do solo que o sistema de irrigação deverá ser ligado e desligado.
+                                                                </p>
+                                                                <div class="mb-3">
+                                                                    <label for="humidity-min" class="form-label">Umidade</label>
+                                                                    <input type="text" id="humidity" name="humidity" data-plugin="range-slider" data-type="double" data-min="0" data-max="100" data-from="32" data-to="64" data-prefix="" data-postfix="%" data-grid="true" data-decorate_both="true" required="" />
+                                                                    <div class="valid-feedback mt-2">
+                                                                        Perfeito!
+                                                                    </div>
+                                                                    <div class="invalid-feedback mt-2" id="invalid-humidity">
+                                                                        Selecione um intervalo de umidade válido!
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-check form-checkbox-primary mb-2">
+                                                                    <input type="checkbox" class="form-check-input" id="night-irrigation" name="night-irrigation" checked="" />
+                                                                    <label class="form-check-label" for="night-irrigation">Irrigação Noturna</label>
+                                                                    <div class="valid-feedback">
+                                                                        Perfeito!
+                                                                    </div>
+                                                                    <div class="invalid-feedback">
+                                                                        Selecione a opção para continuar!
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div id="per-flow">
+                                                                <p class="header-title mt-3">Por vazão</p>
+                                                                <p class="text-muted font-14">
+                                                                    Abaixo você poderá definir o horário e a vazão de água em litros que deve ser irrigada.
+                                                                </p>
+                                                                <div class="mb-2">
+                                                                    <label for="water-flow" class="form-label">Vazão <span class="badge badge-primary-lighten rounded-pill">(L)</span></label>
+                                                                    <input class="form-control" type="number" id="water-flow" name="water-flow" placeholder="Informe a vazão de água em litros." required="" />
+                                                                    <div class="valid-feedback">
+                                                                        Perfeito!
+                                                                    </div>
+                                                                    <div class="invalid-feedback">
+                                                                        Informe um número válido!
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2">
+                                                                    <label for="time-on" class="form-label">Ligar</label>
+                                                                    <div class="input-group">
+                                                                        <input id="time-on-flow" type="text" name="time-on" class="form-control time" required="" />
+                                                                        <span class="input-group-text"><i class="dripicons-clock"></i></span>
+                                                                        <div class="valid-feedback">
+                                                                            Perfeito!
+                                                                        </div>
+                                                                        <div class="invalid-feedback">
+                                                                            Informe um horário válido!
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="button" class="btn btn-success" id="save-form" style="min-width: 80px;">Salvar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form action="#" method="POST" id="delete-schedule-irrigation">
+                            {% csrf_token %}
+
+                            <div id="delete-schedule-irrigation-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="delete-schedule-irrigation-label" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header modal-colored-header bg-danger">
+                                            <h4 class="modal-title" id="delete-schedule-irrigation-label">Excluir Agenda</h4>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h5>Atenção!</h5>
+                                            <p>
+                                                A agenda de irrigação selecionada será <strong>excluída</strong> permanentemente.<br />
+                                                <br />
+                                                Você tem certeza que deseja excluir?
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="delete-schedule-irrigation-button">Confirmar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        {% if not scheduled_irrigations %}
+                            <p class="text-center font-15 mt-3 mb-3">Nenhuma irrigação foi agendada até o momento!</p>
+                        {% else %}
+                            <div class="tab-content">
+                                <div class="tab-pane show active" id="scroll-horizontal-preview">
+                                    <table id="scroll-horizontal-datatable" class="table w-100 nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Tipo</th>
+                                                <th>Período</th>
+                                                <th>Estado</th>
+                                                <th>Ligar</th>
+                                                <th>Desligar</th>
+                                                <th>Irrigação Noturna</th>
+                                                <th>Ações</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for irrigation_schedule in scheduled_irrigations %}
+                                                <tr>
+                                                    <td class="fw-bold">{{ irrigation_schedule.id }}</td>
+                                                    <td>{{ irrigation_schedule.get_irrigation_type_display }}</td>
+                                                    <td>
+                                                        {% if irrigation_schedule.irrigation_type == 'day' %}
+                                                            Inacessível
+                                                        {% else %}
+                                                            {{ irrigation_schedule.get_irrigation_period_display }}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {% if irrigation_schedule.status == 'irrigated' %}
+                                                            <span class="badge badge-success-lighten">{{ irrigation_schedule.get_status_display }}</span>
+                                                        {% elif irrigation_schedule.status == 'irrigating' %}
+                                                            <span class="badge badge-warning-lighten">{{ irrigation_schedule.get_status_display }}</span>
+                                                        {% else %}
+                                                            <span class="badge badge-info-lighten">{{ irrigation_schedule.get_status_display }}</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {% if irrigation_schedule.irrigation_type == 'day' %}
+                                                            {{ irrigation_schedule.datetime_on | date:'d/m/Y H:i:s' }}
+                                                        {% elif irrigation_schedule.irrigation_type == 'time' %}
+                                                            {{ irrigation_schedule.time_on | date:'H:i:s' }}
+                                                        {% elif irrigation_schedule.irrigation_type == 'humidity' %}
+                                                            {{ irrigation_schedule.humidity_on }}%
+                                                        {% else %}
+                                                            {{ irrigation_schedule.time_on | date:'H:i:s' }}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {% if irrigation_schedule.irrigation_type == 'day' %}
+                                                            {{ irrigation_schedule.datetime_off | date:'d/m/Y H:i:s' }}
+                                                        {% elif irrigation_schedule.irrigation_type == 'time' %}
+                                                            {{ irrigation_schedule.time_off | date:'H:i:s' }}
+                                                        {% elif irrigation_schedule.irrigation_type == 'humidity' %}
+                                                            {{ irrigation_schedule.humidity_off }}%
+                                                        {% else %}
+                                                            {{ irrigation_schedule.water_flow | floatformat:2 }} L
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {% if irrigation_schedule.irrigation_type == 'humidity' %}
+                                                            <input type="checkbox" class="form-check-input readonly" {% if irrigation_schedule.night_irrigation %}checked=""{% endif %}>
+                                                        {% else %}
+                                                            Inacessível 
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="align-middle p-0">
+                                                        <a href="javascript: void(0);" title="Editar" class="update action-icon me-1"> 
+                                                            <i class="uil-edit" id="{{ irrigation_schedule.id }}"></i>
+                                                        </a>
+                                                        <a href="javascript: void(0);" title="Apagar" class="delete action-icon"> 
+                                                            <i class="uil-trash" id="{{ irrigation_schedule.id }}"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>                                          
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/vendor/ion.rangeSlider.min.js' %}"></script>
+    <script src="{% static 'js/vendor/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'js/vendor/dataTables.bootstrap5.js' %}"></script>
+    <script src="{% static 'js/ui/component.range-slider.js' %}"></script>
+    <script src="{% static 'js/pages/demo.alerts.js' %}"></script>
+    <script src="{% static 'js/pages/demo.schedule-irrigation.js' %}"></script>
+{% endblock %}

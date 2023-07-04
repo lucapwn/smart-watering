@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Gerar Relatórios - Smart Watering{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);" translate="no">Smart Watering</a></li>
+                            <li class="breadcrumb-item active">Gerar Relatórios</li>
+                        </ol>
+                    </div>
+                    <h4 class="page-title">Gerar Relatórios</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <form id="generate-reports" action="{% url 'generate-reports' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="header-title">Selecione os dados</h4>
+                            <p class="text-muted font-14">
+                                Abaixo você poderá selecionar os dados que serão exportados.
+                            </p>
+
+                            <div class="tab-content">
+                                <div class="tab-pane show active" id="switches-preview">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-check form-checkbox-info mb-1">
+                                                <input type="checkbox" id="id" name="exported-data" value="id" class="form-check-input exported-data" checked>
+                                                <label class="form-check-label" for="id">ID</label>
+                                            </div>
+
+                                            <div class="form-check form-checkbox-info mb-1">
+                                                <input type="checkbox" id="datetime" name="exported-data" value="datetime" class="form-check-input exported-data" checked>
+                                                <label class="form-check-label" for="datetime">Data e Hora</label>
+                                            </div>
+
+                                            <div class="form-check form-checkbox-info mb-1">
+                                                <input type="checkbox" id="temperature" name="exported-data" value="temperature" class="form-check-input exported-data" checked>
+                                                <label class="form-check-label" for="temperature">Temperatura</label>
+                                            </div>
+
+                                            <div class="form-check form-checkbox-info mb-1">
+                                                <input type="checkbox" id="dew-point" name="exported-data" value="dew-point" class="form-check-input exported-data" checked>
+                                                <label class="form-check-label" for="dew-point">Ponto de Orvalho</label>
+                                            </div>
+
+                                            <div class="form-check form-checkbox-info mb-1">
+                                                <input type="checkbox" id="air-quality" name="exported-data" value="air-quality" class="form-check-input exported-data" checked>
+                                                <label class="form-check-label" for="air-quality">Qualidade do Ar</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-check form-checkbox-info mb-1">
+                                                <input type="checkbox" id="atmospheric-pressure" name="exported-data" value="atmospheric-pressure" class="form-check-input exported-data" checked>
+                                                <label class="form-check-label" for="atmospheric-pressure">Pressão Atmosférica</label>
+                                            </div>
+
+                                            <div class="form-check form-checkbox-info mb-1">
+                                                <input type="checkbox" id="humidity" name="exported-data" value="humidity" class="form-check-input exported-data" checked>
+                                                <label class="form-check-label" for="humidity">Umidade do Ar</label>
+                                            </div>
+
+                                            <div class="form-check form-checkbox-info mb-1">
+                                                <input type="checkbox" id="soil-moisture" name="exported-data" value="soil-moisture" class="form-check-input exported-data" checked>
+                                                <label class="form-check-label" for="soil-moisture">Umidade do Solo</label>
+                                            </div>
+
+                                            <div class="form-check form-checkbox-info mb-1">
+                                                <input type="checkbox" id="amount-water" name="exported-data" value="amount-water" class="form-check-input exported-data" checked>
+                                                <label class="form-check-label" for="amount-water">Nível de Água (L)</label>
+                                            </div>
+                                            
+                                            <div class="form-check form-checkbox-info mb-1">
+                                                <input type="checkbox" id="percentage-water" name="exported-data" value="percentage-water" class="form-check-input exported-data" checked>
+                                                <label class="form-check-label" for="percentage-water">Nível de Água (%)</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-check form-checkbox-info mb-1">
+                                                <input type="checkbox" id="luminosity" name="exported-data" value="luminosity" class="form-check-input exported-data" checked>
+                                                <label class="form-check-label" for="luminosity">Luminosidade</label>
+                                            </div>
+
+                                            <div class="form-check form-checkbox-info mb-1">
+                                                <input type="checkbox" id="rain-level" name="exported-data" value="rain-level" class="form-check-input exported-data" checked>
+                                                <label class="form-check-label" for="rain-level">Nível de Chuva</label>
+                                            </div>
+
+                                            <div class="form-check form-checkbox-info mb-1">
+                                                <input type="checkbox" id="heat-index" name="exported-data" value="heat-index" class="form-check-input exported-data" checked>
+                                                <label class="form-check-label" for="heat-index">Índice de Calor</label>
+                                            </div>
+
+                                            <div class="form-check form-checkbox-info mb-1">
+                                                <input type="checkbox" id="ultraviolet-radiation" name="exported-data" value="ultraviolet-radiation" class="form-check-input exported-data" checked>
+                                                <label class="form-check-label" for="ultraviolet-radiation">Radiação Ultravioleta</label>
+                                            </div>
+
+                                            <div class="form-check form-checkbox-info mb-1">
+                                                <input type="checkbox" id="water-consumption" name="exported-data" value="water-consumption" class="form-check-input exported-data" checked>
+                                                <label class="form-check-label" for="water-consumption">Consumo de Água</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="header-title">Selecione o período</h4>
+                            <p class="text-muted font-14">
+                                Abaixo você poderá selecionar o período dos dados que serão exportados.
+                            </p>
+
+                            <div class="tab-content">
+                                <div class="tab-pane show active" id="switches-preview">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="input-group mb-2">
+                                                <label class="input-group-text" for="month">Mês</label>
+                                                <select id="month" name="month" class="form-select">
+                                                    <option value="1" selected>Janeiro</option>
+                                                    <option value="2">Fevereiro</option>
+                                                    <option value="3">Março</option>
+                                                    <option value="4">Abril</option>
+                                                    <option value="5">Maio</option>
+                                                    <option value="6">Junho</option>
+                                                    <option value="7">Julho</option>
+                                                    <option value="8">Agosto</option>
+                                                    <option value="9">Setembro</option>
+                                                    <option value="10">Outubro</option>
+                                                    <option value="11">Novembro</option>
+                                                    <option value="12">Dezembro</option>
+                                                </select>
+                                            </div> 
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="input-group mb-2">
+                                                <label class="input-group-text" for="year">Ano</label>
+                                                <select id="year" name="year" class="form-select">
+                                                    {% for year in years %}
+                                                        {% if forloop.first %}
+                                                            <option value="{{ year }}" selected>{{ year }}</option>
+                                                        {% else %}
+                                                            <option value="{{ year }}">{{ year }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="header-title">Exportar dados</h4>
+                            <p class="text-muted font-14">
+                                Abaixo você poderá exportar os dados em formato CSV.
+                            </p>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="submit" id="export-csv" class="btn btn-success mb-2"><i class="uil-down-arrow me-2"></i>Exportar CSV</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/pages/demo.generate-reports.js' %}"></script>
+{% endblock %}

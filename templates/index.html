@@ -1,0 +1,274 @@
+﻿{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Painel - Smart Watering{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);" translate="no">Smart Watering</a></li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Painel</a></li>
+                            <li class="breadcrumb-item active">Sensores</li>
+                        </ol>
+                    </div>
+                    <h4 class="page-title">Sensores</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-xxl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-6">
+                                <h5 class="text-muted fw-normal mt-0 text-truncate">
+                                    <a class="text-muted p-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Temperatura">
+                                        Temperatura
+                                    </a>
+                                </h5>
+                                <h3 id="temperature" class="my-2 py-1">26.00 °C</h3>
+
+                                <div id="tooltip-container2">
+                                    <i class="text-danger mdi mdi-arrow-down-bold" id="temperature-arrow"></i>
+                                    <a class="text-danger p-0" id="temperature-last-hour" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Desde a última hora">
+                                        5.38%
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-end">
+                                    <div id="temperature-chart" data-colors="#0acf97"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-xxl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-6">
+                                <h5 class="text-muted fw-normal mt-0 text-truncate">
+                                    <a class="text-muted p-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Ponto de Orvalho">
+                                        Ponto de Orvalho
+                                    </a>
+                                </h5>
+                                <h3 class="my-2 py-1" id="dew-point">22.00 °C</h3>
+
+                                <div id="tooltip-container2">
+                                    <i class="text-success mdi mdi-arrow-up-bold" id="dew-point-arrow"></i>
+                                    <a class="text-success p-0" id="dew-point-last-hour" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Desde a última hora">
+                                        4.87%
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-end">
+                                    <div id="dew-point-chart" data-colors="#727cf5"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-xxl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-6">
+                                <h5 class="text-muted fw-normal mt-0 text-truncate">
+                                    <a class="text-muted p-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Qualidade do Ar">
+                                        Qualidade do Ar
+                                    </a>
+                                </h5>
+                                <h3 class="my-2 py-1" id="air-quality">9.18e+2 ppm</h3>
+
+                                <div id="tooltip-container2">
+                                    <i class="text-success mdi mdi-arrow-up-bold" id="air-quality-arrow"></i>
+                                    <a class="text-success p-0" id="air-quality-last-hour" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Desde a última hora">
+                                        11.7%
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-end">
+                                    <div id="air-quality-chart" data-colors="#0acf97"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-xxl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-6">
+                                <h5 class="text-muted fw-normal mt-0 text-truncate">
+                                    <a class="text-muted p-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Pressão Atmosférica">
+                                        Pressão Atmosférica
+                                    </a>
+                                </h5>
+                                <h3 class="my-2 py-1" id="atmospheric-pressure">9.28e+4 Pa</h3>
+
+                                <div id="tooltip-container2">
+                                    <i class="text-success mdi mdi-arrow-up-bold" id="atmospheric-pressure-arrow"></i>
+                                    <a class="text-success p-0" id="atmospheric-pressure-last-hour" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Desde a última hora">
+                                        3.27%
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-end">
+                                    <div id="atmospheric-pressure-chart" data-colors="#727cf5"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title mb-3">Umidade</h4>
+
+                        <div class="chart-content-bg">
+                            <div class="row text-center">
+                                <div class="col-md-6">
+                                    <p class="text-muted mb-0 mt-3">Umidade do Ar</p>
+                                    <h2 class="fw-normal mb-3">
+                                        <small class="mdi mdi-checkbox-blank-circle text-primary align-middle me-1"></small>
+                                        <span id="humidity">64%</span>
+                                    </h2>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="text-muted mb-0 mt-3">Umidade do Solo</p>
+                                    <h2 class="fw-normal mb-3">
+                                        <small class="mdi mdi-checkbox-blank-circle text-success align-middle me-1"></small>
+                                        <span id="soil-moisture">76%</span>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div dir="ltr">
+                            <div id="humidity-chart" class="apex-charts mt-3" data-colors="#727cf5,#0acf97"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="card">
+                    <div class="card-body mb-3">
+                        <h4 class="header-title">Reservatório de água</h4>
+
+                        {% if not setting.reservoir_capacity %}
+                            <p class="text-muted font-14">
+                                Defina as dimensões do reservatório de água em <a href="{% url 'settings' %}">configurações</a>.
+                            </p>
+                        {% else %}
+                            <p class="text-muted font-14">
+                                Abaixo você poderá analisar a capacidade atual e máxima do reservatório.
+                            </p>
+                        {% endif %}
+
+                        <div dir="ltr" class="mt-3">
+                            <div id="water-reservoir-chart" class="apex-charts" data-colors="#39afd1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title">Consumo de água</h4>
+                        <p class="text-muted font-14">
+                            Abaixo você poderá analisar o consumo de água durante os meses do ano de 
+                            <script>
+                                document.write(new Date().getFullYear());
+                            </script>.
+                        </p>
+                        <div dir="ltr" class="mt-3">
+                            <div id="water-consumption-chart" class="apex-charts" data-colors="#39afd1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card widget-inline">
+                    <div class="card-body p-0">
+                        <div class="row g-0 mt-1 mb-1">
+                            <div class="col-xxl-3 col-sm-6">
+                                <div class="card shadow-none m-0">
+                                    <div class="card-body text-center">
+                                        <i class="uil-temperature-plus text-muted font-24"></i>
+                                        <h3><span id="heat-index">26.00 °C</span></h3>
+                                        <p class="text-muted font-15 mb-0">Índice de Calor</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xxl-3 col-sm-6">
+                                <div class="card shadow-none m-0">
+                                    <div class="card-body text-center">
+                                        <i class="uil-cloud-showers-heavy text-muted font-24"></i>
+                                        <h3><span id="rain-level">46%</span></h3>
+                                        <p class="text-muted font-15 mb-0">Nível de Chuva</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xxl-3 col-sm-6">
+                                <div class="card shadow-none m-0">
+                                    <div class="card-body text-center">
+                                        <i class="uil-clouds text-muted font-24"></i>
+                                        <h3><span id="luminosity">768.00 lx</span></h3>
+                                        <p class="text-muted font-15 mb-0">Luminosidade</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xxl-3 col-sm-6">
+                                <div class="card shadow-none m-0">
+                                    <div class="card-body text-center">
+                                        <i class="uil-cloud-sun text-muted font-24"></i>
+                                        <h3><span id="ultraviolet-radiation">2.46 mW/cm²</span></h3>
+                                        <p class="text-muted font-15 mb-0">Radiação Ultravioleta</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/vendor/apexcharts.min.js' %}"></script>
+    <script src="{% static 'js/ui/component.todo.js' %}"></script>
+    <script src="{% static 'js/pages/demo.dashboard.js' %}"></script>
+{% endblock %}

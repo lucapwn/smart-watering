@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta name="description" content="Smart Watering" />
+    <meta name="author" content="Lucas Araújo" />
+    <link href="{% static 'images/core/favicon.ico' %}" rel="shortcut icon" />
+    <link href="{% static 'css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style" />
+    <link href="{% static 'css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style" />
+</head>
+<body class="authentication-bg pb-0">
+    <div id="preloader">
+        <div id="status">
+            <div class="bouncing-loader"><div></div><div></div><div></div></div>
+        </div>
+    </div>
+    
+    <div class="auth-fluid">
+        <div class="auth-fluid-form-box">
+            <div class="align-items-center d-flex h-100">
+                <div class="card-body">
+                    <div class="auth-brand text-center text-lg-start">
+                        <a href="{% url 'index' %}" class="logo-dark fw-normal text-secondary font-20" translate="no">
+                            Smart Watering
+                        </a>
+                    </div>
+
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-fluid-right text-center">
+            <div class="auth-user-testimonial">
+                <h2 class="mb-3">Simples, fácil e prático!</h2>
+                <p class="lead">Com o <span translate="no">Smart Watering</span>, é possível controlar e configurar facilmente o sistema de irrigação e monitorar os dados de sensores em tempo real.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/vendor.min.js' %}"></script>
+    <script src="{% static 'js/app.min.js' %}"></script>
+    {% block js %}{% endblock %}
+</body>
+</html>
