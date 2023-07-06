@@ -12,6 +12,7 @@ IoT platform for remote monitoring and control of a sustainable irrigation syste
 - [Support](#support)
 - [Materials](#materials)
   - [Connecting the components](#connecting-the-components)
+  - [System Example](#system-example)
 - [Running](#running)
   - [IoT Platform](#iot-platform)
   - [Irrigation System](#irrigation-system)
@@ -96,9 +97,11 @@ GND   | GND   | GND     | GND   | GND   | GND     | GND    | GND      | GND   | 
 5V    | VCC   | VCC     | VCC   | VCC   | VCC     | VCC    | VCC      | VCC   |            | VCC
 3V3   |       |         |       |       |         |        |          |       | 3V3        |
 
+### System Example
+
 After connecting the components, the system should look similar to the system illustrated in the image below.
 
-<img src="https://github.com/lucapwn/smart-watering/assets/58787069/3ede2807-cf93-4cfe-ad45-bde694d29e4a" width="600">
+<img src="https://github.com/lucapwn/smart-watering/assets/58787069/3ede2807-cf93-4cfe-ad45-bde694d29e4a" width="540">
 
 ## Running
 
