@@ -25,10 +25,6 @@ Smart Watering is an IoT platform developed with the ESP32 for remote monitoring
 
 Watch the example video on YouTube at [```https://www.youtube.com/watch?v=AMdGk-LIUu8```](https://www.youtube.com/watch?v=AMdGk-LIUu8).
 
-The platform can easily be accessed at [```https://smart-watering.up.railway.app/```](https://smart-watering.up.railway.app/).
-
-Use the user **admin** and the password **admin** to login.
-
 <img src="https://github.com/lucapwn/smart-watering/assets/58787069/4b6ed894-7dd2-48f9-94d8-ccdb8b9cd15e" alt="Smart Watering" width="1000">
 
 ### Features
