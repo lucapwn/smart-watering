@@ -23,9 +23,9 @@ IoT platform for remote monitoring and control of a sustainable irrigation syste
 
 Smart Watering is an IoT platform developed with the ESP32 for remote monitoring and control of sustainable irrigation. It includes a REST API for seamless communication between the platform and the ESP32.
 
-Watch the example video on YouTube <img src="https://lh3.googleusercontent.com/u/1/drive-viewer/AKGpihYMr6F0ZmJXA_0XQ7w6GvSoFHJjKMeOmi8e5FWD4r-Zgrk8uiHq3uBGSpX2NoUv1gQiKUTpF-p3ZAl9YXBbEEp-i-xq9Q=w717-h945" width="16"> at [```https://www.youtube.com/watch?v=AMdGk-LIUu8```](https://www.youtube.com/watch?v=AMdGk-LIUu8).
+Watch the example video on YouTube <img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihYxrxSgZJ95czZ7-yXrZmD243pVr-rRhk1QHlctVx0uiEOa3lBzp4UP_TlHDB9B_qXawsmbuPYTe4wHPOL8ia3qU9DkEuR3ohg=w1920-h945" width="16"> at [```https://www.youtube.com/watch?v=AMdGk-LIUu8```](https://www.youtube.com/watch?v=AMdGk-LIUu8).
 
-<img src="https://lh3.googleusercontent.com/u/1/drive-viewer/AKGpihYTrJeB0jztLX6kzReAJ5M_QMsxbmL3aXZ2xQ3EcuyAyEaqm8IaQit3WjGSdl78EYlN5UZn34DrE1ZsVlstoKij2D5N=w1920-h945" alt="Smart Watering" width="1000">
+<img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihZIASxpeHJjubSxhV2drwtCZQepbE96nuk1pEbkus6oLbu85YFVNGxwJ1FSGHLvkFyvYr7BVFgxKAkgdaw2cDS4kcZU3Ro4Nw=w1920-h945-rw-v1" alt="Smart Watering" width="1000">
 
 ### Features
 
