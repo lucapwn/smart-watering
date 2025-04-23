@@ -22,7 +22,7 @@ Plataforma IoT para monitoramento e controle remoto de um sistema de irrigação
 
 ## Sobre
 
-O Smart Watering é um sistema de irrigação automatizado, sustentável e de baixo custo, composto por uma plataforma IoT (_SaaS_) com funcionalidades inovadoras, disponível para _smartphones_, _tablets_ e computadores. Este sistema também inclui uma API REST para realizar a comunicação entre a plataforma IoT e o Raspberry Pi Pico W.
+O Smart Watering é um sistema de irrigação automatizado, sustentável e de baixo custo, composto por uma plataforma IoT (_SaaS_) com funcionalidades inovadoras, disponível para _smartphones_, _tablets_ e computadores. Este sistema também inclui uma API REST para realizar a comunicação entre a plataforma IoT e o ESP32.
 
 Este projeto foi tema do meu Trabalho de Conclusão de Curso (TCC), com o título _“Smart Watering: Um Sistema de Monitoramento Remoto e Controle de Irrigação Sustentável Baseado em Plataforma IoT”_. Além disso, fui bolsista no projeto por um ano, que também foi aprovado e fomentado pelo [Programa Centelha](https://programacentelha.com.br/ce/) - Ceará (2022).
 
